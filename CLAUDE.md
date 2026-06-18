@@ -38,7 +38,13 @@ npm test           # unit tests
 npm run db:migrate # prisma migrate dev
 ```
 
-TypeScript throughout. Validate all external inputs with **Zod**. Log via **Winston**. Circuit-break external AI/API calls with **opossum**.
+HTTP framework: **Express** (not Fastify). TypeScript throughout. Validate all external inputs with **Zod**. Log via **Winston**. Circuit-break external AI/API calls with **opossum**.
+
+Key Express patterns used across services:
+- Rate limiting: `express-rate-limit` + Redis store (`rate-limit-redis`)
+- JWT auth: `jsonwebtoken` + custom `authenticateToken` middleware
+- Error handling: `(err, req, res, next)` 4-arg Express error middleware
+- Routing: `express.Router()` per service, mounted at `/api/v1`
 
 ## Architecture Decisions (non-obvious)
 
