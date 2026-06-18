@@ -72,7 +72,7 @@ After user reviews Step 2:
 
 ## Project Status
 
-**Pre-implementation.** Only the architecture spec exists (`ai-assistant-architecture.md`). Source code directories (`mobile/`, `backend/`, `infra/`) do not yet exist. When implementing, follow the spec closely.
+**Phase 0 in progress.** `mobile/` scaffolded (Flutter 3.29.3, Riverpod, go_router). `infra/docker-compose.yml` ready. `backend/` not yet created.
 
 ## Planned Structure
 
@@ -88,12 +88,15 @@ Use `fvm flutter` / `fvm dart` (FVM manages SDK). See global CLAUDE.md for alias
 
 State management: **Riverpod** (not BLoC). Local DB: **Drift** (SQLite). HTTP: **Dio**. WebSocket: `web_socket_channel`.
 
-Run/build commands (once scaffolded):
+Run/build commands:
 ```bash
 fvm flutter pub get
-fvm flutter run
-fvm dart run build_runner build -d   # after modifying @freezed / codegen files
+fvm dart run build_runner build -d   # MUST run before flutter test/build when *.g.dart files are gitignored
+fvm flutter run                      # --dart-define=APP_FLAVOR=prod for production flavor
+fvm flutter test
 ```
+
+**Generated files** (`*.g.dart`, `*.freezed.dart`) are gitignored. Any CI pipeline and any developer must run `build_runner` before building or testing once Drift/Freezed/Riverpod codegen is added.
 
 ## Node.js Backend (`backend/`)
 
