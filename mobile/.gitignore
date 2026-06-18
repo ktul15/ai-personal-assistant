@@ -1,0 +1,5 @@
+.fvm/
+.dart_tool/
+build/
+*.g.dart
+*.freezed.dart
