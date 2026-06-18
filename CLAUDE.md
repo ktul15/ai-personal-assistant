@@ -2,6 +2,45 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Workflow — STRICT RULES
+
+**NEVER work directly on `main` or `dev`.** Always use a feature branch.
+
+### Branch Structure
+
+| Branch | Purpose |
+|---|---|
+| `main` | Production. Merged from `dev` only after ALL issues in a phase are complete. |
+| `dev` | Integration. Merged from feature branches only. |
+| `feature/issue-<N>-<short-desc>` | One branch per GitHub issue, created from `dev`. |
+
+**Flow:** `feature/*` → `dev` → `main`
+
+### Steps for Every Issue
+
+1. **Move issue to In Progress** on the project board
+2. `git checkout dev && git pull`
+3. `git checkout -b feature/issue-<number>-<short-description>`
+4. Do all work on the feature branch
+5. **Run code review:** launch a `code-reviewer` agent to analyse all changes. Present findings to user. Fix only what the user asks to fix.
+6. **Present summary to user:**
+   - All files created/modified
+   - Data flow explanation (how data moves through the layers)
+   - Key decisions and patterns used
+7. **Wait for explicit user approval before committing.** Do NOT commit until the user says to proceed.
+8. Pull latest dev before merging: `git checkout dev && git pull && git checkout - && git merge dev`. Resolve any conflicts on the feature branch first.
+9. After approval: commit and merge into `dev` with `--no-ff`
+10. Close the issue and move to Done on the project board
+
+### Phase Completion
+
+Only after **every issue in a phase is closed**, merge `dev` into `main`:
+```bash
+git checkout main && git pull && git merge --no-ff dev && git push
+```
+
+---
+
 ## Project Status
 
 **Pre-implementation.** Only the architecture spec exists (`ai-assistant-architecture.md`). Source code directories (`mobile/`, `backend/`, `infra/`) do not yet exist. When implementing, follow the spec closely.
