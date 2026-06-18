@@ -2,6 +2,74 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Workflow — STRICT RULES
+
+**NEVER work directly on `main` or `dev`.** Always use a feature branch.
+
+### Branch Structure
+
+| Branch | Purpose |
+|---|---|
+| `main` | Production. Merged from `dev` only after ALL issues in a phase are complete. |
+| `dev` | Integration. Merged from feature branches only. |
+| `feature/issue-<N>-<short-desc>` | One branch per GitHub issue, created from `dev`. |
+
+**Flow:** `feature/*` → `dev` → `main`
+
+### Steps for Every Issue
+
+1. **Move issue to In Progress** on the project board
+2. `git checkout dev && git pull`
+3. `git checkout -b feature/issue-<number>-<short-description>`
+4. Do all work on the feature branch
+5. **Run code review:** launch a `code-reviewer` agent to analyse all changes. Present findings to user. Fix only what the user asks to fix.
+6. **Present summary to user:**
+   - All files created/modified
+   - Data flow explanation (how data moves through the layers)
+   - Key decisions and patterns used
+7. **Wait for explicit user approval before committing.** Do NOT commit until the user says to proceed.
+8. Pull latest dev before merging: `git checkout dev && git pull && git checkout - && git merge dev`. Resolve any conflicts on the feature branch first.
+9. After approval: commit and merge into `dev` with `--no-ff`
+10. Close the issue and move to Done on the project board
+
+### Phase Completion
+
+Only after **every issue in a phase is closed**, merge `dev` into `main`:
+```bash
+git checkout main && git pull && git merge --no-ff dev && git push
+```
+
+---
+
+## Development Workflow — Mandatory 3-Step Review
+
+After completing every feature, run this review flow in full before merging. **Do not skip any step.**
+
+### Step 1 — Developer Explanation
+
+Immediately after finishing a feature, provide:
+- **What, why, how** — describe the feature, its purpose, and the approach taken
+- **All created/modified files** — one-line purpose for each
+- **Complete data flow** through the system (e.g., UI → Provider → Repository → API/DB and back)
+
+Wait for user review before proceeding to Step 2.
+
+### Step 2 — Code Review
+
+After user reviews Step 1:
+- Launch a `code-reviewer` agent to audit all feature code
+- List **every issue found** with its file name
+- For each issue: explain what it is, why it's a problem, and the real-world consequence if left unfixed
+- Present the full list and wait for user decision
+
+### Step 3 — Fix Approved Issues
+
+After user reviews Step 2:
+- Fix **only** the issues the user approves — do not fix unapproved issues
+- If fixes are substantial (new files, significant logic changes), restart from Step 1 for the fixes
+
+---
+
 ## Project Status
 
 **Pre-implementation.** Only the architecture spec exists (`ai-assistant-architecture.md`). Source code directories (`mobile/`, `backend/`, `infra/`) do not yet exist. When implementing, follow the spec closely.
