@@ -41,6 +41,35 @@ git checkout main && git pull && git merge --no-ff dev && git push
 
 ---
 
+## Development Workflow — Mandatory 3-Step Review
+
+After completing every feature, run this review flow in full before merging. **Do not skip any step.**
+
+### Step 1 — Developer Explanation
+
+Immediately after finishing a feature, provide:
+- **What, why, how** — describe the feature, its purpose, and the approach taken
+- **All created/modified files** — one-line purpose for each
+- **Complete data flow** through the system (e.g., UI → Provider → Repository → API/DB and back)
+
+Wait for user review before proceeding to Step 2.
+
+### Step 2 — Code Review
+
+After user reviews Step 1:
+- Launch a `code-reviewer` agent to audit all feature code
+- List **every issue found** with its file name
+- For each issue: explain what it is, why it's a problem, and the real-world consequence if left unfixed
+- Present the full list and wait for user decision
+
+### Step 3 — Fix Approved Issues
+
+After user reviews Step 2:
+- Fix **only** the issues the user approves — do not fix unapproved issues
+- If fixes are substantial (new files, significant logic changes), restart from Step 1 for the fixes
+
+---
+
 ## Project Status
 
 **Pre-implementation.** Only the architecture spec exists (`ai-assistant-architecture.md`). Source code directories (`mobile/`, `backend/`, `infra/`) do not yet exist. When implementing, follow the spec closely.
