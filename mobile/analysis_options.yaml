@@ -1,0 +1,27 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Style
+    - always_declare_return_types
+    - always_put_required_named_parameters_first
+    - avoid_redundant_argument_values
+    - avoid_returning_null_for_void
+    - avoid_unnecessary_containers
+    - directives_ordering
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_single_quotes
+    - sized_box_for_whitespace
+    - sort_child_properties_last
+    - use_full_hex_values_for_flutter_colors
+    - use_key_in_widget_constructors
+
+    # Safety
+    - avoid_dynamic_calls
+    - avoid_print
+    - cancel_subscriptions
+    - close_sinks
+    - unawaited_futures

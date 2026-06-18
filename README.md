@@ -29,12 +29,21 @@ docs/        Architecture and decision documents
 
 ```bash
 cd backend
-cp .env.example .env       # fill in API keys
+cp .env.example .env
+# ⚠️  Edit .env now — set POSTGRES_PASSWORD, REDIS_PASSWORD, DATABASE_URL,
+#     REDIS_URL, and JWT_SECRET before continuing. See .env.example comments.
 npm install
-docker compose -f ../infra/docker-compose.yml up -d   # postgres + redis
+docker compose -f ../infra/docker-compose.yml --env-file .env up -d
 npm run db:migrate
 npm run dev
 ```
+
+> `--env-file .env` is required — Docker Compose reads passwords from it to
+> initialise Postgres and Redis. Without it the containers fail to start.
+>
+> Generate a secure `JWT_SECRET` with: `openssl rand -base64 32`
+>
+> Never commit `.env` — it is gitignored.
 
 ### Flutter
 
