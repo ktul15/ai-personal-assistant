@@ -168,6 +168,7 @@ REDIS_URL
 # Storage
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
+AWS_REGION
 S3_BUCKET_NAME
 
 # Auth
@@ -178,8 +179,8 @@ GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 
 # App
-PORT                  # 3000
-WEBSOCKET_PORT        # 3001
+PORT                  # 3000 (gateway HTTP)
+WEBSOCKET_PORT        # 3001 (gateway WebSocket — orchestrator starts at 3002)
 ```
 
 ## Prisma Schema (core tables)
